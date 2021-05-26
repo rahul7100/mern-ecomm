@@ -32,3 +32,35 @@ exports.register = async (req, res) => {
     console.log(err);
   }
 };
+
+
+exports.login=async(req,res)=>{
+  try{
+    const user1={
+      email:req.body.email,
+      password:req.body.password
+    }
+    await userModel.findOne({email:user1.email},(req,userData)=>{
+      if(err){
+        throw err;
+
+      }
+      else{
+        if(!userdata){
+          res.json({msg:"USER DOESNOT EXIST"});
+        }
+        else{
+          if (await bycryptjs.compare(user1.password,userData.hashpass)){
+
+          }
+          else{
+            res.json("msg:WRONG PASSWORD BRO SAHI DAALO!!!");
+          }
+        }
+      }
+    })
+  }
+  catch(err){
+    console.log(err);
+  }
+}
